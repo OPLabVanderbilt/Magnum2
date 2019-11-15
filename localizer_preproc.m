@@ -9,7 +9,7 @@ clear all; %#ok<CLALL>
 clc;
 
 % Base directory
-baseDir = '/Users/Wasabi/Experiments_Wasabi/Rankin/Magnum2/';
+baseDir = '/Users/miso/Documents/Experiments/Rankin/Magnum2/JasonBatch/';
 % Get subject folders
 sbjs = dir([baseDir 'Subjects/0*']);
 
@@ -53,14 +53,34 @@ for crun = 1:nrun
             continue
         end
         
-        % Add deformation file
+        % Add skull stripped deformation file
         defMap = [sbjDir strucFolder 'y_' sbjName '_SS_struct.nii'];
         
         % Check if deformation file exists
         if ~isfile(defMap)
-            warning([sbjName ' is missing deformation map, skipping.']);
-            toRemove = [toRemove crun];
-            continue
+            warning([sbjName ' is missing skull-stripped deformation, ' ...
+                'looking for originals.']);
+            
+            % Get original deformation map instead
+            defMap = [sbjSir strucFolder 'y_' sbjName '_struct.nii'];
+            
+            % Check if original deformation map exists
+            if ~isfile(defMap)
+                warning([sbjName ' is missing deformation map, skipping.']);
+                toRemove = [toRemove crun];
+                continue
+            else % Original deformation exists, need to replace structural
+                % Get original structural file
+                structural = [sbjDir strucFolder sbjName '_struct.nii'];
+                
+                % Check if original structural file exists
+                if ~isfile(structural)
+                    warning([sbjName ' is missing original structural ' ...
+                        'file']);
+                    toRemove = [toRemove crun];
+                    continue
+                end
+            end
         end
         
         % Get localizer run info
