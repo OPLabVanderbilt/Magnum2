@@ -46,23 +46,16 @@ for crun = 1:nrun
         % Add structural scan for coregistration
         structural = [sbjDir strucFolder sbjName '_SS_struct.nii'];
         
-        % Check structural exists
-        if ~isfile(structural)
-            warning([sbjName ' is missing structural file, skipping.']);
-            toRemove = [toRemove crun]; 
-            continue
-        end
-        
         % Add skull stripped deformation file
         defMap = [sbjDir strucFolder 'y_' sbjName '_SS_struct.nii'];
         
-        % Check if deformation file exists
-        if ~isfile(defMap)
-            warning([sbjName ' is missing skull-stripped deformation, ' ...
-                'looking for originals.']);
+        % Check if deformation file and sturctural file exists
+        if ~isfile(defMap) || ~isfile(structural)
+            warning([sbjName ' is missing a skull-stripped file, ' ...
+                'looking for original files.']);
             
             % Get original deformation map instead
-            defMap = [sbjSir strucFolder 'y_' sbjName '_struct.nii'];
+            defMap = [sbjDir strucFolder 'y_' sbjName '_struct.nii'];
             
             % Check if original deformation map exists
             if ~isfile(defMap)
@@ -80,6 +73,7 @@ for crun = 1:nrun
                     toRemove = [toRemove crun];
                     continue
                 end
+                fprintf('Using non-skull stripped files\n');
             end
         end
         
