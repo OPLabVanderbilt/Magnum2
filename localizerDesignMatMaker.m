@@ -9,7 +9,7 @@ clear all; %#ok<CLALL>
 clc;
 
 % Base directory
-baseDir = '/Users/Wasabi/Experiments_Wasabi/Rankin/Magnum2/';
+baseDir = '/Users/miso/Documents/Experiments/Rankin/Magnum2/JasonBatch/';
 % Get subject folders
 sbjs = dir([baseDir 'Subjects/0*']);
 
