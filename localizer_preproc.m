@@ -8,6 +8,9 @@
 clear all; %#ok<CLALL>
 clc;
 
+% Overwrite?
+overwrite = false;
+
 % Base directory
 baseDir = '/Users/miso/Documents/Experiments/Rankin/Magnum2/JasonBatch/';
 % Get subject folders
@@ -31,6 +34,13 @@ for crun = 1:nrun
         % Change to other name if necessary
         if ~exist([sbjDir '/' strucFolder], 'dir')
             strucFolder = 'new_structural/';
+        end
+        
+        % Check if this participant has been completed
+        if exist([sbjDir '/swa' sbjName '_loc.nii'], 'file') && ~overwrite
+            warning([sbjName ' is complete, not overwriting'])
+            toRemove = [toRemove crun];
+            continue
         end
         
         % Get localizer
