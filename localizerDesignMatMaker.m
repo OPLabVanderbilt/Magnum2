@@ -38,8 +38,9 @@ for crun = 1:nrun
         end
         
         % Get trial file
-        trialFile = [baseDir 'Subjects/s' sbjName(1:3) '_r1_' ...
-            sbjName(4:numel(sbjName)) '_ProjImagLoc.mat'];
+        trialFile = [baseDir 'Subjects/BehavioralDataFromLoc/s' ...
+            sbjName(1:3) '_r1_' sbjName(4:numel(sbjName)) ...
+            '_ProjImagLoc.mat'];
         
         % Check if trial file exists
         if ~isfile(trialFile)
