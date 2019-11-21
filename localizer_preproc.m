@@ -29,11 +29,11 @@ for crun = 1:nrun
         % Get directories
         sbjName = sbjs(crun).name;
         sbjDir = [baseDir 'Subjects/' sbjName '/'];
-        strucFolder = 'structural/';
+        strucFolder = 'old_structural/';
         
         % Change to other name if necessary
         if ~exist([sbjDir '/' strucFolder], 'dir')
-            strucFolder = 'old_structural/';
+            strucFolder = 'structural/';
         end
         
         % Check if this participant has been completed
